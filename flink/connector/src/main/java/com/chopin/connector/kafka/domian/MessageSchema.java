@@ -7,6 +7,8 @@ import com.alibaba.fastjson2.JSON;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.serialization.SerializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Chopin
@@ -14,8 +16,10 @@ import org.apache.flink.api.common.typeinfo.TypeInformation;
  */
 public class MessageSchema implements DeserializationSchema<Message>, SerializationSchema<Message> {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public Message deserialize(byte[] bytes) throws IOException {
+        logger.info("deserialize bytes: " + JSON.parseObject(bytes, Message.class));
         return JSON.parseObject(bytes, Message.class);
     }
 
